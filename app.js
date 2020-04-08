@@ -9,6 +9,7 @@ const cors = require("cors");
 const passport = require("passport");
 const errorhandler = require("errorhandler");
 const mongoose = require("mongoose");
+require("dotenv").config();
 
 const isProduction = process.env.NODE_ENV === "production";
 
@@ -38,7 +39,7 @@ if (!isProduction) {
 if (isProduction) {
   mongoose.connect(process.env.MONGODB_URI);
 } else {
-  mongoose.connect("mongodb://localhost/daily-dose");
+  mongoose.connect(process.env.DATABASE);
   mongoose.set("debug", true);
 }
 
@@ -89,6 +90,6 @@ app.use(function(err, req, res, next) {
 });
 
 // start the server
-const server = app.listen(process.env.PORT || 3000, function() {
+const server = app.listen(process.env.PORT || 5000, function() {
   console.log("Listening on port " + server.address().port);
 });
