@@ -78,9 +78,7 @@ UserSchema.methods.toProfileJSONFor = function(user) {
   return {
     username: this.username,
     bio: this.bio,
-    image:
-      this.image ||
-      "https://d2e70e9yced57e.cloudfront.net/wallethub/images/profile/avatars/Defaults/avatar7_350_Vb6ebcb3_.png",
+    image: this.image || "https://i.ibb.co/XCXYv4Y/avatar.png",
     following: false
   };
 };
