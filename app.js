@@ -45,6 +45,7 @@ if (isProduction) {
 
 // models
 require("./models/User");
+require("./models/Article");
 
 // config
 require("./config/passport");
