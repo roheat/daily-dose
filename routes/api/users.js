@@ -47,7 +47,7 @@ router.get("/user", auth.required, function(req, res, next) {
     .then(function(user) {
       if (!user) return res.sendStatus(401);
 
-      return res.json({ user: user.toAuthJSON });
+      return res.json({ user: user.toAuthJSON() });
     })
     .catch(next);
 });

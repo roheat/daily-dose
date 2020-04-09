@@ -6,7 +6,7 @@ function getTokenFromHeader(req) {
     req.headers.authorization &&
     req.headers.authorization.split(" ")[0] === "Token"
   ) {
-    return require.headers.authorization.split(" ")[1];
+    return req.headers.authorization.split(" ")[1];
   }
   return null;
 }
