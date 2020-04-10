@@ -129,7 +129,7 @@ Authentication optional, returns profile object.
     "title": "How to become a Super Saiyan?",
     "description": "Ever wonder how?",
     "body": "You have to believe",
-    "tagList": ['reactjs', 'angularjs', 'super-saiyan']
+    "tagList": ["reactjs", "angularjs", "super-saiyan"]
   }
 }
 ```
