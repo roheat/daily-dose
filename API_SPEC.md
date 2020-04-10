@@ -160,7 +160,7 @@ Authentication required, returns the updated article.
 
 Authentication required.
 
-## Favourite/Unfavourite an article
+## Favorite/Unfavorite an article
 
 `POST /api/articles/:slug/favorite`
 

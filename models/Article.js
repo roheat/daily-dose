@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const uniqueValidator = require("mongoose-unique-validator");
 const slug = require("slug");
+const User = mongoose.model("User");
 
 const ArticleSchema = new mongoose.Schema(
   {
@@ -8,7 +9,7 @@ const ArticleSchema = new mongoose.Schema(
     title: String,
     description: String,
     body: String,
-    favouritesCount: { type: Number, default: 0 },
+    favoritesCount: { type: Number, default: 0 },
     tagList: [{ type: String }],
     author: { type: mongoose.Schema.Types.ObjectId, ref: "User" }
   },
@@ -44,6 +45,18 @@ ArticleSchema.methods.toJSONFor = function(user) {
     favoritesCount: this.favoritesCount,
     author: this.author.toProfileJSONFor(user)
   };
+};
+
+ArticleSchema.methods.updateFavoriteCount = function() {
+  const article = this;
+
+  return User.count({ favorites: { $in: [article._id] } }).then(function(
+    count
+  ) {
+    article.favoritesCount = count;
+
+    return article.save();
+  });
 };
 
 mongoose.model("Article", ArticleSchema);
