@@ -22,7 +22,7 @@ const UserSchema = new mongoose.Schema(
       match: [/\S+@\S+\.\S+/, "is invalid"],
       index: true
     },
-    favorite: [{ type: mongoose.Schema.Types.ObjectId, ref: "Article" }],
+    favorites: [{ type: mongoose.Schema.Types.ObjectId, ref: "Article" }],
     bio: String,
     image: String,
     hash: String,
@@ -86,7 +86,7 @@ UserSchema.methods.toProfileJSONFor = function(user) {
 
 UserSchema.methods.favorite = function(id) {
   // check if not already favorite
-  if (this.favorites.indexOf(id) === -1) this.favorites.push(id);
+  if (this.favorites.indexOf(id) === -1) this.favorites.concat([id]);
 
   return this.save();
 };
