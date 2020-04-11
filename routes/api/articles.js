@@ -86,22 +86,24 @@ router.delete("/:article", auth.required, function(req, res, next) {
 });
 
 // Favorite
-router.post("/:article/favorite", function(req, res, next) {
+router.post("/:article/favorite", auth.required, function(req, res, next) {
   const articleId = req.article._id;
 
   User.findById(req.payload.id)
     .then(function(user) {
       if (!user) return res.sendStatus(401);
 
-      return user.favorite(articleId).then(function(article) {
-        return res.json({ article: article.toJSONFor(user) });
+      return user.favorite(articleId).then(function() {
+        return req.article.updateFavoriteCount().then(function(article) {
+          return res.json({ article: article.toJSONFor(user) });
+        });
       });
     })
     .catch(next);
 });
 
 // Unfavorite
-router.delete("/:article/favorite", function(req, res, next) {
+router.delete("/:article/favorite", auth.required, function(req, res, next) {
   const articleId = req.article._id;
 
   User.findById(req.payload.id)

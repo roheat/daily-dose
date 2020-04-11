@@ -86,7 +86,8 @@ UserSchema.methods.toProfileJSONFor = function(user) {
 
 UserSchema.methods.favorite = function(id) {
   // check if not already favorite
-  if (this.favorites.indexOf(id) === -1) this.favorites.concat([id]);
+  if (this.favorites.indexOf(id) === -1)
+    this.favorites = this.favorites.concat(id);
 
   return this.save();
 };
