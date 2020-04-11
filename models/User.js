@@ -81,7 +81,6 @@ UserSchema.methods.toProfileJSONFor = function(user) {
     username: this.username,
     bio: this.bio,
     image: this.image || "https://i.ibb.co/XCXYv4Y/avatar.png",
-    following: false,
     following: user ? user.isFollowing(this._id) : false
   };
 };
@@ -119,7 +118,7 @@ UserSchema.methods.unfollow = function(id) {
 };
 
 UserSchema.methods.isFollowing = function(id) {
-  return this.following.some(user => user.id.toString() === id.toString());
+  return this.following.some(followId => followId.toString() === id.toString());
 };
 
 mongoose.model("User", UserSchema);
