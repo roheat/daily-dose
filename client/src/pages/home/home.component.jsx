@@ -3,8 +3,12 @@ import { connect } from "react-redux";
 
 import Banner from "components/banner/banner.component";
 import MainView from "components/main-view/main-view.component";
+import agent from "api/agent";
 
 class HomePage extends React.Component {
+  componentWillMount() {
+    this.props.onLoad(agent.Articles.all());
+  }
   render() {
     return (
       <div className="home-page">
@@ -29,4 +33,8 @@ const mapStateToProps = state => ({
   appName: state.appName
 });
 
-export default connect(mapStateToProps)(HomePage);
+const mapDispatchToProps = dispatch => ({
+  onLoad: payload => dispatch({ type: "HOME_PAGE_LOADED", payload })
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomePage);
