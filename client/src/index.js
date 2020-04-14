@@ -1,9 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
-import { createStore } from "redux";
+import { applyMiddleware, createStore } from "redux";
 
-import App from "./App";
+import App from "App";
+import { promiseMiddleware } from "redux/middleware";
+const middlewares = [promiseMiddleware];
 
 const INITIAL_STATE = {
   appName: "DailyDose",
@@ -12,13 +14,14 @@ const INITIAL_STATE = {
 
 const reducer = function(state = INITIAL_STATE, action) {
   switch (action.type) {
+    case "HOME_PAGE_LOADED":
+      return { ...state, articles: action.payload.articles };
     default:
       return state;
   }
 };
 
-// 3 functions in store: subscribe, dispatch, getState
-const store = createStore(reducer);
+const store = createStore(reducer, applyMiddleware(...middlewares));
 
 ReactDOM.render(
   <Provider store={store}>
