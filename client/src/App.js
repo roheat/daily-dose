@@ -10,11 +10,6 @@ import actionTypes from "redux/common/common.types";
 import agent from "api/agent";
 
 class App extends React.Component {
-  constructor() {
-    super();
-    this.state = {};
-  }
-
   componentDidMount() {
     const token = window.localStorage.getItem("jwt");
 
@@ -33,7 +28,10 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <Header appName={this.props.appName} />
+        <Header
+          appName={this.props.appName}
+          currentUser={this.props.currentUser}
+        />
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route exact path="/login" component={LoginPage} />
@@ -44,7 +42,11 @@ class App extends React.Component {
 }
 
 function mapStateToProps(state) {
-  return { appName: state.common.appName, redirectTo: state.common.redirectTo };
+  return {
+    appName: state.common.appName,
+    redirectTo: state.common.redirectTo,
+    currentUser: state.common.currentUser
+  };
 }
 
 const mapDispatchToProps = dispatch => ({
