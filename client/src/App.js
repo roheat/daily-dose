@@ -1,8 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
+import { Switch, Route } from "react-router-dom";
 
 import Header from "components/header/header.component";
-
 import HomePage from "pages/home/home.component";
 
 class App extends React.Component {
@@ -10,7 +10,9 @@ class App extends React.Component {
     return (
       <div>
         <Header appName={this.props.appName} />
-        <HomePage />
+        <Switch>
+          <Route exact path="/" component={HomePage} />
+        </Switch>
       </div>
     );
   }
