@@ -1,5 +1,6 @@
 import commonActionTypes from "./common.types";
 import authActionTypes from "../auth/auth.types";
+import settingsActionTypes from "../settings/settings.types";
 
 const INITIAL_STATE = {
   appName: "DailyDose",
@@ -15,6 +16,7 @@ export default (state = INITIAL_STATE, action) => {
         appLoaded: true,
         currentUser: action.payload ? action.payload.user : null
       };
+
     case commonActionTypes.REDIRECT:
       return { ...state, redirectTo: null };
 
@@ -26,6 +28,17 @@ export default (state = INITIAL_STATE, action) => {
         token: action.error ? null : action.payload.user.token,
         currentUser: action.error ? null : action.payload.user
       };
+
+    case authActionTypes.LOGOUT:
+      return { ...state, redirectTo: "/", token: null, currentUser: null };
+
+    case settingsActionTypes.SETTINGS_SAVED:
+      return {
+        ...state,
+        redirectTo: action.error ? null : "/",
+        currentUser: action.error ? null : action.payload.user
+      };
+
     default:
       return state;
   }
