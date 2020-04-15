@@ -6,10 +6,10 @@ class Login extends React.Component {
       <div className="auth-page">
         <div className="container page">
           <div className="row">
-            <div className="col-md-6">
+            <div className="col-md-6 offset-md-3 col-xs-12">
               <h1 className="text-xs-center">Sign In</h1>
               <p className="text-xs-center">
-                <a href="/">Need an account?</a>
+                <a href="/">Need an account? Sign up here.</a>
               </p>
 
               <form>

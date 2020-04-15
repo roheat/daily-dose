@@ -4,6 +4,7 @@ import { Switch, Route } from "react-router-dom";
 
 import Header from "components/header/header.component";
 import HomePage from "pages/home/home.component";
+import LoginPage from "pages/login/login.component";
 
 class App extends React.Component {
   render() {
@@ -12,6 +13,7 @@ class App extends React.Component {
         <Header appName={this.props.appName} />
         <Switch>
           <Route exact path="/" component={HomePage} />
+          <Route exact path="/login" component={LoginPage} />
         </Switch>
       </div>
     );
