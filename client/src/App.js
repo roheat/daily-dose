@@ -7,19 +7,29 @@ import Header from "components/header/header.component";
 import HomePage from "pages/home/home.component";
 import LoginPage from "pages/login/login.component";
 import actionTypes from "redux/common/common.types";
+import agent from "api/agent";
 
 class App extends React.Component {
   constructor() {
     super();
     this.state = {};
   }
-  static getDerivedStateFromProps(nextProps) {
-    if (nextProps.redirectTo) {
-      this.props.history.push(nextProps.redirectTo);
+
+  componentDidMount() {
+    const token = window.localStorage.getItem("jwt");
+
+    if (token) agent.setToken(token);
+
+    this.props.onLoad(token ? agent.Auth.current() : null, token);
+  }
+
+  componentDidUpdate() {
+    if (this.props.redirectTo) {
+      this.props.history.push(this.props.redirectTo);
       this.props.onRedirect();
     }
-    return null;
   }
+
   render() {
     return (
       <div>
@@ -38,6 +48,8 @@ function mapStateToProps(state) {
 }
 
 const mapDispatchToProps = dispatch => ({
-  onRedirect: () => dispatch({ type: actionTypes.REDIRECT })
+  onRedirect: () => dispatch({ type: actionTypes.REDIRECT }),
+  onLoad: (payload, token) =>
+    dispatch({ type: actionTypes.APP_LOAD, payload, token })
 });
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

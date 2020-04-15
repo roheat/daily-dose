@@ -76,7 +76,7 @@ const mapStateToProps = state => ({ ...state.auth });
 const mapDispatchToProps = dispatch => ({
   onSubmit: (email, password) =>
     dispatch({
-      type: actionTypes.AUTH_LOGIN,
+      type: actionTypes.LOGIN,
       payload: agent.Auth.login(email, password)
     })
 });

@@ -1,5 +1,5 @@
 const actionTypes = {
-  AUTH_LOGIN: "AUTH_LOGIN"
+  LOGIN: "LOGIN"
 };
 
 export default actionTypes;

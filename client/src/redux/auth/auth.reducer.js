@@ -2,7 +2,7 @@ import actionTypes from "./auth.types";
 
 export default (state = {}, action) => {
   switch (action.type) {
-    case actionTypes.AUTH_LOGIN:
+    case actionTypes.LOGIN:
       return {
         ...state,
         loading: false,

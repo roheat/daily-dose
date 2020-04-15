@@ -1,4 +1,5 @@
-import actionTypes from "./common.types";
+import commonActionTypes from "./common.types";
+import authActionTypes from "../auth/auth.types";
 
 const INITIAL_STATE = {
   appName: "DailyDose",
@@ -7,17 +8,17 @@ const INITIAL_STATE = {
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case actionTypes.APP_LOAD:
+    case commonActionTypes.APP_LOAD:
       return {
         ...state,
         token: action.token || null,
         appLoaded: true,
         currentUser: action.payload ? action.payload.user : null
       };
-    case actionTypes.REDIRECT:
+    case commonActionTypes.REDIRECT:
       return { ...state, redirectTo: null };
 
-    case actionTypes.LOGIN:
+    case authActionTypes.LOGIN:
       return {
         ...state,
         redirectTo: action.error ? null : "/",

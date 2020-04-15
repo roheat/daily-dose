@@ -22,4 +22,4 @@ function isPromise(obj) {
   return obj && typeof obj.then === "function";
 }
 
-export { promiseMiddleware };
+export default promiseMiddleware;

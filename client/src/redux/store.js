@@ -1,9 +1,9 @@
 import { applyMiddleware, createStore } from "redux";
-import { promiseMiddleware } from "redux/middleware";
+import { promiseMiddleware, localStorageMiddleware } from "redux/middlewares";
 
 import rootReducer from "./root-reducer";
 
-const middlewares = [promiseMiddleware];
+const middlewares = [promiseMiddleware, localStorageMiddleware];
 
 const store = createStore(rootReducer, applyMiddleware(...middlewares));
 
