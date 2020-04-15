@@ -19,6 +19,7 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, redirectTo: null };
 
     case authActionTypes.LOGIN:
+    case authActionTypes.REGISTER:
       return {
         ...state,
         redirectTo: action.error ? null : "/",

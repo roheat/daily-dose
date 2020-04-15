@@ -6,6 +6,8 @@ import { withRouter } from "react-router";
 import Header from "components/header/header.component";
 import HomePage from "pages/home/home.component";
 import LoginPage from "pages/login/login.component";
+import RegisterPage from "pages/register/register.component";
+
 import actionTypes from "redux/common/common.types";
 import agent from "api/agent";
 
@@ -35,6 +37,7 @@ class App extends React.Component {
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route exact path="/login" component={LoginPage} />
+          <Route exact path="/register" component={RegisterPage} />
         </Switch>
       </div>
     );
