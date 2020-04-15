@@ -21,7 +21,7 @@ class App extends React.Component {
 }
 
 function mapStateToProps(state) {
-  return { appName: state.appName };
+  return { appName: state.common.appName };
 }
 
 export default connect(mapStateToProps)(App);

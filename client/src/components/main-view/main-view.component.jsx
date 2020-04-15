@@ -20,7 +20,7 @@ const MainView = props => (
 );
 
 const mapStateToProps = state => ({
-  articles: state.articles
+  articles: state.home.articles
 });
 
 export default connect(mapStateToProps)(MainView);
