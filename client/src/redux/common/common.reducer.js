@@ -20,6 +20,8 @@ export default (state = INITIAL_STATE, action) => {
     case commonActionTypes.REDIRECT:
       return { ...state, redirectTo: null };
 
+    case authActionTypes.LOGOUT:
+      return { ...state, redirectTo: "/", token: null, currentUser: null };
     case authActionTypes.LOGIN:
     case authActionTypes.REGISTER:
       return {
@@ -28,9 +30,6 @@ export default (state = INITIAL_STATE, action) => {
         token: action.error ? null : action.payload.user.token,
         currentUser: action.error ? null : action.payload.user
       };
-
-    case authActionTypes.LOGOUT:
-      return { ...state, redirectTo: "/", token: null, currentUser: null };
 
     case settingsActionTypes.SETTINGS_SAVED:
       return {
