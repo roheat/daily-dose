@@ -5,6 +5,7 @@ import marked from "marked";
 import { withRouter } from "react-router-dom";
 
 import ArticleMeta from "components/article-meta/article-meta.component";
+import CommentContainer from "components/comment-container/comment-container.component";
 
 class ArticlePage extends React.Component {
   componentWillMount() {
@@ -20,7 +21,13 @@ class ArticlePage extends React.Component {
     );
   }
   render() {
-    const { article, currentUser } = this.props;
+    const {
+      article,
+      match: { params },
+      currentUser,
+      comments,
+      commentErrors
+    } = this.props;
     if (!article) return null;
 
     const markup = { __html: marked(article.body) };
@@ -29,7 +36,7 @@ class ArticlePage extends React.Component {
     return (
       <div className="article-page">
         <div className="banner">
-          <div className="container">
+          <div className="container page">
             <h1>{article.title}</h1>
             <ArticleMeta article={article} canModify={canModify} />
           </div>
@@ -51,7 +58,14 @@ class ArticlePage extends React.Component {
           </div>
         </div>
 
-        <div className="row">{/* Comments */}</div>
+        <div className="row">
+          <CommentContainer
+            comments={comments || []}
+            errors={commentErrors}
+            slug={params.id}
+            currentUser={currentUser}
+          />
+        </div>
       </div>
     );
   }

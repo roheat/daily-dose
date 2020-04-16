@@ -47,7 +47,9 @@ const Auth = {
 };
 
 const Comments = {
-  forArticle: slug => requests.get(`/articles/${slug}/comments`)
+  forArticle: slug => requests.get(`/articles/${slug}/comments`),
+  create: (slug, comment) =>
+    requests.post(`/articles/${slug}/comments`, { comment })
 };
 
 let token = null;

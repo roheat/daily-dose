@@ -9,6 +9,14 @@ export default (state = {}, action) => {
         comments: action.payload[1].comments
       };
 
+    case actionTypes.ADD_COMMENT:
+      return {
+        ...state,
+        commentErrors: action.error ? action.payload.errors : null,
+        comments: action.error
+          ? null
+          : (state.comments || []).concat([action.payload.comment])
+      };
     default:
       return state;
   }
