@@ -4,6 +4,8 @@ import { connect } from "react-redux";
 import marked from "marked";
 import { withRouter } from "react-router-dom";
 
+import ArticleMeta from "components/article-meta/article-meta.component";
+
 class ArticlePage extends React.Component {
   componentWillMount() {
     const {
@@ -18,7 +20,7 @@ class ArticlePage extends React.Component {
     );
   }
   render() {
-    const { article, currentUser, comments, commentErrors } = this.props;
+    const { article, currentUser } = this.props;
     if (!article) return null;
 
     const markup = { __html: marked(article.body) };
@@ -29,7 +31,7 @@ class ArticlePage extends React.Component {
         <div className="banner">
           <div className="container">
             <h1>{article.title}</h1>
-            {/* <ArticleMeta article={article} canModify={canModify} /> */}
+            <ArticleMeta article={article} canModify={canModify} />
           </div>
         </div>
 
@@ -49,14 +51,7 @@ class ArticlePage extends React.Component {
           </div>
         </div>
 
-        <div className="row">
-          {/* <CommentContainer
-            comments={comments || []}
-            errors={commentErrors}
-            slug={params.id}
-            currentUser={currentUser}
-          /> */}
-        </div>
+        <div className="row">{/* Comments */}</div>
       </div>
     );
   }
