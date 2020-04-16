@@ -58,7 +58,7 @@ class ArticlePage extends React.Component {
           </div>
         </div>
 
-        <div className="row">
+        <div>
           <CommentContainer
             comments={comments || []}
             errors={commentErrors}

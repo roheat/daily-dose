@@ -19,7 +19,7 @@ router.param("article", function(req, res, next, slug) {
     .catch(next);
 });
 
-router.param("comment", function(req, res, next) {
+router.param("comment", function(req, res, next, id) {
   Comment.findById(id)
     .then(function(comment) {
       if (!comment) return res.sendStatus(404);
@@ -219,7 +219,7 @@ router.post("/:article/comments", auth.required, function(req, res, next) {
       comment.author = user;
 
       return comment.save().then(function() {
-        req.article.comments.concat([comment]);
+        req.article.comments = req.article.comments.concat([comment]);
 
         return req.article.save().then(function() {
           return res.json({ comment: comment.toJSONFor(user) });
@@ -264,8 +264,8 @@ router.delete("/:article/comments/:comment", auth.required, function(
   next
 ) {
   if (req.comment.author.toString() === req.payload.id.toString()) {
-    req.article.comments.remove(req.comment.id);
-
+    req.article.comments.remove(req.comment._id);
+    console.log(req.comment);
     req.article
       .save()
       .then(

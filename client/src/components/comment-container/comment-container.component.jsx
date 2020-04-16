@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 
 import ListErrors from "components/list-errors/list-errors.component";
 import CommentInput from "components/comment-input/comment-input.component";
+import CommentList from "components/comment-list/comment-list.component";
 
 const CommentContainer = props => {
   if (props.currentUser)
@@ -13,11 +14,11 @@ const CommentContainer = props => {
           <CommentInput slug={props.slug} currentUser={props.currentUser} />
         </div>
 
-        {/* <CommentList
+        <CommentList
           comments={props.comments}
           slug={props.slug}
           currentUser={props.currentUser}
-        /> */}
+        />
       </div>
     );
 
@@ -29,12 +30,12 @@ const CommentContainer = props => {
         <Link to="/register">Sign up</Link>
         {` to add comments on this article.`}
       </p>
-      {/* 
+
       <CommentList
         comments={props.comments}
         slug={props.slug}
         currentUser={props.currentUser}
-      /> */}
+      />
     </div>
   );
 };

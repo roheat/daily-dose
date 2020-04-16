@@ -5,7 +5,7 @@ import ArticleActions from "components/article-actions/article-actions.component
 const ArticleMeta = ({ article, canModify }) => (
   <div className="article-meta">
     <Link to={`@${article.author.username}`}>
-      <img src={article.author.image} />
+      <img src={article.author.image} alt="author" />
     </Link>
 
     <div className="info">
