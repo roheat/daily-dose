@@ -5,7 +5,6 @@ import CommentActions from "components/comment-actions/comment-actions.component
 const Comment = props => {
   const { comment, currentUser } = props;
   const show = currentUser && currentUser.username === comment.author.username;
-  console.log(comment);
   return (
     <div className="card">
       <div className="card-block">
