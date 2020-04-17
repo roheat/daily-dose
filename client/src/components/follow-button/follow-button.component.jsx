@@ -9,7 +9,6 @@ const FollowButton = ({ isUser, user, follow, unfollow }) => {
 
   const handleClick = event => {
     event.preventDefault();
-
     if (user.following) unfollow(user.username);
     else follow(user.username);
   };

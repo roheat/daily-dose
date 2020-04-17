@@ -21,8 +21,9 @@ router.get("/:username", auth.optional, function(req, res, next) {
 
       return res.json({ profile: req.profile.toProfileJSONFor(user) });
     });
+  } else {
+    return res.json({ profile: req.profile.toProfileJSONFor(false) });
   }
-  return res.json({ profile: req.profile.toProfileJSONFor(false) });
 });
 
 router.post("/:username/follow", auth.required, function(req, res, next) {
@@ -41,7 +42,6 @@ router.post("/:username/follow", auth.required, function(req, res, next) {
 
 router.delete("/:username/follow", auth.required, function(req, res, next) {
   const profileId = req.profile._id;
-
   User.findById(req.payload.id)
     .then(function(user) {
       if (!user) res.sendStatus(401);

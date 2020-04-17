@@ -143,7 +143,6 @@ router.get("/:article", function(req, res, next) {
 router.put("/:article", auth.required, function(req, res, next) {
   User.findById(req.payload.id).then(function(user) {
     if (req.article.author._id.toString() === req.payload.id.toString()) {
-      console.log("body", req.body);
       const { title, description, body, tagList } = req.body.article;
       if (typeof title !== "undefined") req.article.title = title;
       if (typeof description !== "undefined")
@@ -265,7 +264,6 @@ router.delete("/:article/comments/:comment", auth.required, function(
 ) {
   if (req.comment.author.toString() === req.payload.id.toString()) {
     req.article.comments.remove(req.comment._id);
-    console.log(req.comment);
     req.article
       .save()
       .then(

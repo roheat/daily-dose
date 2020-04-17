@@ -10,6 +10,7 @@ import RegisterPage from "pages/register/register.component";
 import SettingsPage from "pages/settings/settings.component";
 import ArticlePage from "pages/article/article.component";
 import ProfilePage from "pages/profile/profile.component";
+import ProfileFavoritesPage from "pages/profile-favorites/profile-favorites.component";
 
 import actionTypes from "redux/common/common.types";
 import agent from "api/agent";
@@ -44,6 +45,11 @@ class App extends React.Component {
           <Route exact path="/settings" component={SettingsPage} />
           <Route exact path="/article/:id" component={ArticlePage} />
           <Route exact path="/@:username" component={ProfilePage} />
+          <Route
+            exact
+            path="/@:username/favorites"
+            component={ProfileFavoritesPage}
+          />
         </Switch>
       </div>
     );

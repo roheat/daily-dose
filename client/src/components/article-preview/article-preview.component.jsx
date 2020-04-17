@@ -4,14 +4,14 @@ import { Link } from "react-router-dom";
 const ArticlePreview = ({ article }) => (
   <div className="article-preview">
     <div className="article-meta">
-      <a href="/">
+      <Link to={`/@${article.author.username}`}>
         <img src={article.author.image} alt="author" />
-      </a>
+      </Link>
 
       <div className="info">
-        <a href="/" className="author">
+        <Link to={`/@${article.author.username}`} className="author">
           {article.author.username}
-        </a>
+        </Link>
         <span className="date">
           {new Date(article.createdAt).toDateString()}
         </span>

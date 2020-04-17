@@ -7,7 +7,7 @@ import ArticleList from "components/article-list/article-list.component";
 import EditProfileSettings from "components/edit-profile-settings/edit-profile-settings.component";
 import FollowButton from "components/follow-button/follow-button.component";
 
-class Profile extends React.Component {
+class ProfilePage extends React.Component {
   componentDidMount() {
     this.props.onLoad(
       Promise.all([
@@ -15,6 +15,16 @@ class Profile extends React.Component {
         agent.Articles.byAuthor(this.props.match.params.username)
       ])
     );
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.profile.following !== this.props.profile.following)
+      nextProps.onLoad(
+        Promise.all([
+          agent.Profile.get(nextProps.match.params.username),
+          agent.Articles.byAuthor(nextProps.match.params.username)
+        ])
+      );
   }
 
   componentWillUnmount() {
@@ -55,19 +65,21 @@ class Profile extends React.Component {
     return (
       <div className="profile-page">
         <div className="user-info">
-          <div className="row">
+          <div style={{ minHeight: "11em" }}>
             <div className="col-xs-12 col-md-10 offset-md-1">
-              <img src={profile.image} className="user-img" />
+              <img src={profile.image} className="user-img" alt="profile" />
               <h4>{profile.username}</h4>
               <p>{profile.bio}</p>
 
-              <EditProfileSettings isUserProfile={isUserProfile} />
-              <FollowButton
-                isUser={isUserProfile}
-                user={profile}
-                follow={this.props.follow}
-                unfollow={this.props.unfollow}
-              />
+              <EditProfileSettings isUser={isUserProfile} />
+              <div>
+                <FollowButton
+                  isUser={isUserProfile}
+                  user={profile}
+                  follow={this.props.onFollow}
+                  unfollow={this.props.onUnfollow}
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -104,5 +116,5 @@ const mapDispatchToProps = dispatch => ({
   onUnload: () => dispatch({ type: "PROFILE_PAGE_UNLOADED" })
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Profile);
-export { Profile, mapStateToProps };
+export default connect(mapStateToProps, mapDispatchToProps)(ProfilePage);
+export { ProfilePage as Profile, mapStateToProps };
