@@ -34,23 +34,32 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <Header
-          appName={this.props.appName}
-          currentUser={this.props.currentUser}
-        />
-        <Switch>
-          <Route exact path="/" component={HomePage} />
-          <Route exact path="/login" component={LoginPage} />
-          <Route exact path="/register" component={RegisterPage} />
-          <Route exact path="/settings" component={SettingsPage} />
-          <Route exact path="/article/:id" component={ArticlePage} />
-          <Route exact path="/@:username" component={ProfilePage} />
-          <Route
-            exact
-            path="/@:username/favorites"
-            component={ProfileFavoritesPage}
+        {this.props.appLoaded ? (
+          <React.Fragment>
+            <Header
+              appName={this.props.appName}
+              currentUser={this.props.currentUser}
+            />
+            <Switch>
+              <Route exact path="/" component={HomePage} />
+              <Route exact path="/login" component={LoginPage} />
+              <Route exact path="/register" component={RegisterPage} />
+              <Route exact path="/settings" component={SettingsPage} />
+              <Route exact path="/article/:id" component={ArticlePage} />
+              <Route exact path="/@:username" component={ProfilePage} />
+              <Route
+                exact
+                path="/@:username/favorites"
+                component={ProfileFavoritesPage}
+              />
+            </Switch>
+          </React.Fragment>
+        ) : (
+          <Header
+            appName={this.props.appName}
+            currentUser={this.props.currentUser}
           />
-        </Switch>
+        )}
       </div>
     );
   }
@@ -59,6 +68,7 @@ class App extends React.Component {
 function mapStateToProps(state) {
   return {
     appName: state.common.appName,
+    appLoaded: state.common.appLoaded,
     redirectTo: state.common.redirectTo,
     currentUser: state.common.currentUser
   };

@@ -25,8 +25,11 @@ class FavoriteArticles extends Profile {
           </Link>
         </li>
 
-        <li className="nav-item active">
-          <Link to={`/@${profile.username}/favorites`} className="nav-link">
+        <li className="nav-item">
+          <Link
+            to={`/@${profile.username}/favorites`}
+            className="nav-link active"
+          >
             Liked Articles
           </Link>
         </li>
