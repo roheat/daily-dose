@@ -48,6 +48,17 @@ const GlobalFeedTab = props => {
   return null;
 };
 
+const TagFilterTab = props => {
+  if (!props.tag) return null;
+  return (
+    <li className="nav-item">
+      <Link to="" className="nav-link active">
+        <i className="ion-pound" /> {props.tag}
+      </Link>
+    </li>
+  );
+};
+
 const MainView = props => (
   <div className="col-md-9">
     <div className="feed-toggle">
@@ -63,6 +74,9 @@ const MainView = props => (
           tab={props.tab}
           onTabClick={props.onTabClick}
         />
+        {!(props.tab === "all" || props.tab === "feed") && (
+          <TagFilterTab tag={props.tag} />
+        )}
       </ul>
     </div>
 

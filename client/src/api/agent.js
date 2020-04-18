@@ -39,7 +39,8 @@ const Articles = {
     requests.get(`/articles?author=${encodeURI(author)}&limit=5`),
   favoritedBy: author =>
     requests.get(`/articles?favorited=${encodeURI(author)}&limit=5`),
-  feed: () => requests.get(`/articles/feed?limit=10`)
+  feed: () => requests.get(`/articles/feed?limit=10`),
+  byTag: tag => requests.get(`/articles?tags=${encodeURI(tag)}&limit=10`)
 };
 
 const Auth = {
@@ -65,6 +66,10 @@ const Profile = {
   get: username => requests.get(`/profiles/${username}`)
 };
 
+const Tags = {
+  getAll: () => requests.get(`/tags`)
+};
+
 let token = null;
 
 const tokenPlugin = req => {
@@ -78,5 +83,6 @@ export default {
   Auth,
   Comments,
   Profile,
+  Tags,
   setToken
 };

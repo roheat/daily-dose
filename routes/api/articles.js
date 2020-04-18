@@ -39,8 +39,8 @@ router.get("/", auth.optional, function(req, res, next) {
 
   if (typeof req.query.offset !== "undefined") limit = req.query.limit;
   if (typeof req.query.offset !== "undefined") offset = req.query.offset;
-  if (typeof req.query.tag !== "undefined")
-    query.tagList = { $in: [req.query.tag] };
+  if (typeof req.query.tags !== "undefined")
+    query.tagList = { $in: [req.query.tags] };
 
   Promise.all([
     req.query.author ? User.findOne({ username: req.query.author }) : null,

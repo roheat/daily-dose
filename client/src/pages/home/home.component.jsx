@@ -1,9 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
 
+import agent from "api/agent";
 import Banner from "components/banner/banner.component";
 import MainView from "components/main-view/main-view.component";
-import agent from "api/agent";
+import TagsView from "components/tags-view/tags-view.component";
 
 class HomePage extends React.Component {
   componentWillMount() {
@@ -13,7 +14,7 @@ class HomePage extends React.Component {
       ? agent.Articles.feed()
       : agent.Articles.all();
 
-    this.props.onLoad(tab, articlesPromise);
+    this.props.onLoad(tab, Promise.all([agent.Tags.getAll(), articlesPromise]));
   }
   render() {
     return (
@@ -26,6 +27,11 @@ class HomePage extends React.Component {
             <div className="col-md-3">
               <div className="sidebar">
                 <p>Popular Tags</p>
+
+                <TagsView
+                  tags={this.props.tags}
+                  onClickTag={this.props.onClickTag}
+                />
               </div>
             </div>
           </div>
@@ -37,11 +43,15 @@ class HomePage extends React.Component {
 
 const mapStateToProps = state => ({
   appName: state.common.appName,
-  token: state.common.token
+  token: state.common.token,
+  ...state.home
 });
 
 const mapDispatchToProps = dispatch => ({
-  onLoad: (tab, payload) => dispatch({ type: "HOME_PAGE_LOADED", tab, payload })
+  onLoad: (tab, payload) =>
+    dispatch({ type: "HOME_PAGE_LOADED", tab, payload }),
+  onClickTag: (tag, payload) =>
+    dispatch({ type: "APPLY_TAG_FILTER", tag, payload })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomePage);

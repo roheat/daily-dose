@@ -49,7 +49,7 @@ class ArticlePage extends React.Component {
 
               <ul className="tag-list">
                 {article.tagList.map(tag => (
-                  <li className="tag-defauly tag-pill tag-outline" key={tag}>
+                  <li className="tag-default tag-pill tag-outline" key={tag}>
                     {tag}
                   </li>
                 ))}
