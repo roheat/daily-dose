@@ -31,16 +31,22 @@ const requests = {
       .then(responseBody)
 };
 
+const limit = (count, page) =>
+  `limit=${count}&offset=${page ? page * count : 0}`;
+
+const encode = encodeURI;
+
 const Articles = {
-  all: page => requests.get("/articles?limit=10"),
+  all: page => requests.get(`/articles?${limit(10, page)}`),
   get: slug => requests.get(`/articles/${slug}`),
   del: slug => requests.del(`/articles/${slug}`),
-  byAuthor: author =>
-    requests.get(`/articles?author=${encodeURI(author)}&limit=5`),
-  favoritedBy: author =>
-    requests.get(`/articles?favorited=${encodeURI(author)}&limit=5`),
-  feed: () => requests.get(`/articles/feed?limit=10`),
-  byTag: tag => requests.get(`/articles?tags=${encodeURI(tag)}&limit=10`)
+  byAuthor: (author, page) =>
+    requests.get(`/articles?author=${encode(author)}&${limit(10, page)}`),
+  favoritedBy: (author, page) =>
+    requests.get(`/articles?favorited=${encode(author)}&${limit(5, page)}`),
+  feed: page => requests.get(`/articles/feed?${limit(10, page)}`),
+  byTag: (tag, page) =>
+    requests.get(`/articles?tags=${encode(tag)}&${limit(10, page)}`)
 };
 
 const Auth = {

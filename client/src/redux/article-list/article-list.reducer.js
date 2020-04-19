@@ -5,7 +5,8 @@ export default (state = {}, action) => {
         ...state,
         articles: action.payload && action.payload[1].articles,
         articlesCount: action.payload[1].articlesCount,
-        tab: action.tab
+        tab: action.tab,
+        currentPage: 0
       };
 
     case "APPLY_TAG_FILTER":
@@ -14,14 +15,24 @@ export default (state = {}, action) => {
         articles: action.payload.articles,
         articlesCount: action.payload.articlesCount,
         tab: null,
-        tag: action.tag
+        tag: action.tag,
+        currentPage: 0
       };
     case "PROFILE_PAGE_LOADED":
     case "PROFILE_FAVORITES_PAGE_LOADED":
       return {
         ...state,
         articles: action.payload && action.payload[1].articles,
-        articlesCount: action.payload && action.payload[1].articlesCount
+        articlesCount: action.payload && action.payload[1].articlesCount,
+        currentPage: 0
+      };
+
+    case "SET_PAGE":
+      return {
+        ...state,
+        articles: action.payload.articles,
+        articlesCount: action.payload.articlesCount,
+        currentPage: action.page
       };
 
     case "HOME_PAGE_UNLOADED":
@@ -34,7 +45,8 @@ export default (state = {}, action) => {
         ...state,
         tab: action.tab,
         articles: action.payload.articles,
-        articlesCount: action.payload.articlesCount
+        articlesCount: action.payload.articlesCount,
+        currentPage: 0
       };
     default:
       return state;

@@ -59,30 +59,38 @@ const TagFilterTab = props => {
   );
 };
 
-const MainView = props => (
-  <div className="col-md-9">
-    <div className="feed-toggle">
-      <ul className="nav nav-pills outline-active">
-        <YourFeedTab
-          token={props.token}
-          tab={props.tab}
-          onTabClick={props.onTabClick}
-        />
+const MainView = props => {
+  const onSetPage = page => props.onSetPage(props.tab, page);
+  return (
+    <div className="col-md-9">
+      <div className="feed-toggle">
+        <ul className="nav nav-pills outline-active">
+          <YourFeedTab
+            token={props.token}
+            tab={props.tab}
+            onTabClick={props.onTabClick}
+          />
 
-        <GlobalFeedTab
-          token={props.token}
-          tab={props.tab}
-          onTabClick={props.onTabClick}
-        />
-        {!(props.tab === "all" || props.tab === "feed") && (
-          <TagFilterTab tag={props.tag} />
-        )}
-      </ul>
+          <GlobalFeedTab
+            token={props.token}
+            tab={props.tab}
+            onTabClick={props.onTabClick}
+          />
+          {!(props.tab === "all" || props.tab === "feed") && (
+            <TagFilterTab tag={props.tag} />
+          )}
+        </ul>
+      </div>
+
+      <ArticleList
+        articles={props.articles}
+        articlesCount={props.articlesCount}
+        currentPage={props.currentPage}
+        onSetPage={onSetPage}
+      />
     </div>
-
-    <ArticleList articles={props.articles} />
-  </div>
-);
+  );
+};
 
 const mapStateToProps = state => ({
   ...state.articleList,
@@ -90,7 +98,14 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  onTabClick: (tab, payload) => dispatch({ type: "CHANGE_TAB", tab, payload })
+  onTabClick: (tab, payload) => dispatch({ type: "CHANGE_TAB", tab, payload }),
+  onSetPage: (tab, page) =>
+    dispatch({
+      type: "SET_PAGE",
+      page,
+      payload:
+        tab === "feed" ? agent.Articles.feed(page) : agent.Articles.all(page)
+    })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainView);

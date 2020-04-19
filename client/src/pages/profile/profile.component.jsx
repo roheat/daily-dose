@@ -31,6 +31,11 @@ class ProfilePage extends React.Component {
     this.props.onUnload();
   }
 
+  onSetPage(page) {
+    const promise = agent.Articles.byAuthor(this.props.profile.username, page);
+    this.props.onSetPage(page, promise);
+  }
+
   renderTabs() {
     return (
       <ul className="nav nav-pills outline-active">
@@ -56,7 +61,13 @@ class ProfilePage extends React.Component {
   }
 
   render() {
-    const { profile, currentUser, articles } = this.props;
+    const {
+      profile,
+      currentUser,
+      articles,
+      articlesCount,
+      currentPage
+    } = this.props;
     if (!profile) return null;
 
     const isUserProfile =
@@ -89,7 +100,12 @@ class ProfilePage extends React.Component {
             <div className="col-xs-12 col-md-10 offset-md-1">
               <div className="articles-toggle">{this.renderTabs()}</div>
 
-              <ArticleList articles={articles} />
+              <ArticleList
+                articles={articles}
+                articlesCount={articlesCount}
+                currentPage={currentPage}
+                onSetPage={this.onSetPage}
+              />
             </div>
           </div>
         </div>
@@ -113,7 +129,8 @@ const mapDispatchToProps = dispatch => ({
       payload: agent.Profile.unfollow(username)
     }),
   onLoad: payload => dispatch({ type: "PROFILE_PAGE_LOADED", payload }),
-  onUnload: () => dispatch({ type: "PROFILE_PAGE_UNLOADED" })
+  onUnload: () => dispatch({ type: "PROFILE_PAGE_UNLOADED" }),
+  onSetPage: (page, payload) => dispatch({ type: "SET_PAGE", page, payload })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProfilePage);
