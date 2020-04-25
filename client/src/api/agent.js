@@ -36,6 +36,8 @@ const limit = (count, page) =>
 
 const encode = encodeURI;
 
+const omitSlug = article => ({ ...article, slug: undefined });
+
 const Articles = {
   all: page => requests.get(`/articles?${limit(10, page)}`),
   get: slug => requests.get(`/articles/${slug}`),
@@ -46,7 +48,10 @@ const Articles = {
     requests.get(`/articles?favorited=${encode(author)}&${limit(5, page)}`),
   feed: page => requests.get(`/articles/feed?${limit(10, page)}`),
   byTag: (tag, page) =>
-    requests.get(`/articles?tags=${encode(tag)}&${limit(10, page)}`)
+    requests.get(`/articles?tags=${encode(tag)}&${limit(10, page)}`),
+  create: article => requests.post(`/articles`, { article }),
+  update: article =>
+    requests.put(`/articles/${article.slug}`, { article: omitSlug(article) })
 };
 
 const Auth = {

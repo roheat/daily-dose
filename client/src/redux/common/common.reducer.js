@@ -45,6 +45,13 @@ export default (state = INITIAL_STATE, action) => {
         currentUser: action.error ? null : action.payload.user
       };
 
+    case "ARTICLE_SUBMITTED":
+      const redirectTo = `article/${action.payload.article.slug}`;
+      return {
+        ...state,
+        redirectTo
+      };
+
     default:
       return state;
   }

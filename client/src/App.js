@@ -11,6 +11,7 @@ import SettingsPage from "pages/settings/settings.component";
 import ArticlePage from "pages/article/article.component";
 import ProfilePage from "pages/profile/profile.component";
 import ProfileFavoritesPage from "pages/profile-favorites/profile-favorites.component";
+import EditorPage from "pages/editor/editor.component";
 
 import actionTypes from "redux/common/common.types";
 import agent from "api/agent";
@@ -52,6 +53,8 @@ class App extends React.Component {
                 path="/@:username/favorites"
                 component={ProfileFavoritesPage}
               />
+              <Route exact path="/editor" component={EditorPage} />
+              <Route exact path="/editor/:slug" component={EditorPage} />
             </Switch>
           </React.Fragment>
         ) : (

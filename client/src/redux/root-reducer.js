@@ -7,6 +7,7 @@ import settingsReducer from "./settings/settings.reducer";
 import articleReducer from "./article/article.reducer";
 import articleListReducer from "./article-list/article-list.reducer";
 import profileReducer from "./profile/profile.reducer";
+import editorReducer from "./editor/editor.reducer";
 
 const rootReducer = combineReducers({
   home: homeReducer,
@@ -15,7 +16,8 @@ const rootReducer = combineReducers({
   settings: settingsReducer,
   article: articleReducer,
   articleList: articleListReducer,
-  profile: profileReducer
+  profile: profileReducer,
+  editor: editorReducer
 });
 
 export default rootReducer;
