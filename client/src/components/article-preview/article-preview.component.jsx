@@ -1,44 +1,79 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
 
-const ArticlePreview = ({ article }) => (
-  <div className="article-preview">
-    <div className="article-meta">
-      <Link to={`/@${article.author.username}`}>
-        <img src={article.author.image} alt="author" />
-      </Link>
+import ArticleListActionTypes from "redux/article-list/article-list.types";
+import agent from "api/agent";
 
-      <div className="info">
-        <Link to={`/@${article.author.username}`} className="author">
-          {article.author.username}
+const FAVORITED_CLASS = "btn btn-sm btn-primary";
+const NOT_FAVORITED_CLASS = "btn btn-sm btn-outline-primary";
+
+const ArticlePreview = props => {
+  const article = props.article;
+  const favoriteButtonClass = article.favorited
+    ? FAVORITED_CLASS
+    : NOT_FAVORITED_CLASS;
+
+  const handleClick = event => {
+    event.preventDefault();
+    if (article.favorited) {
+      props.unfavorite(article.slug);
+    } else {
+      props.favorite(article.slug);
+    }
+  };
+  return (
+    <div className="article-preview">
+      <div className="article-meta">
+        <Link to={`/@${article.author.username}`}>
+          <img src={article.author.image} alt="author" />
         </Link>
-        <span className="date">
-          {new Date(article.createdAt).toDateString()}
-        </span>
+
+        <div className="info">
+          <Link to={`/@${article.author.username}`} className="author">
+            {article.author.username}
+          </Link>
+          <span className="date">
+            {new Date(article.createdAt).toDateString()}
+          </span>
+        </div>
+
+        <div className="pull-xs-right">
+          <button className={favoriteButtonClass} onClick={handleClick}>
+            <i className="ion-heart" /> {article.favoritesCount}
+          </button>
+        </div>
+
+        <Link to={`/article/${article.slug}`} className="preview-link">
+          <h1>{article.title}</h1>
+          <p>{article.description}</p>
+          <span>Read more...</span>
+
+          <ul className="tag-list">
+            {article.tagList &&
+              article.tagList.map(tag => (
+                <li className="tag-default tag-pill tag-outline" key={tag}>
+                  {tag}
+                </li>
+              ))}
+          </ul>
+        </Link>
       </div>
-
-      <div className="pull-xs-right">
-        <button className="btn btn-sm btn-outline-primary">
-          <i className="ion-heart" /> {article.favoritesCount}
-        </button>
-      </div>
-
-      <Link to={`/article/${article.slug}`} className="preview-link">
-        <h1>{article.title}</h1>
-        <p>{article.description}</p>
-        <span>Read more...</span>
-
-        <ul className="tag-list">
-          {article.tagList &&
-            article.tagList.map(tag => (
-              <li className="tag-default tag-pill tag-outline" key={tag}>
-                {tag}
-              </li>
-            ))}
-        </ul>
-      </Link>
     </div>
-  </div>
-);
+  );
+};
 
-export default ArticlePreview;
+const mapDispatchToProps = dispatch => ({
+  favorite: slug =>
+    dispatch({
+      type: ArticleListActionTypes.ARTICLE_FAVORITED,
+      payload: agent.Articles.favorite(slug)
+    }),
+  unfavorite: slug =>
+    dispatch({
+      type: ArticleListActionTypes.ARTICLE_UNFAVORITED,
+      payload: agent.Articles.unfavorite(slug)
+    })
+});
+
+export default connect(null, mapDispatchToProps)(ArticlePreview);

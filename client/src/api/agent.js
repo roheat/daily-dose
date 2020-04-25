@@ -51,7 +51,9 @@ const Articles = {
     requests.get(`/articles?tags=${encode(tag)}&${limit(10, page)}`),
   create: article => requests.post(`/articles`, { article }),
   update: article =>
-    requests.put(`/articles/${article.slug}`, { article: omitSlug(article) })
+    requests.put(`/articles/${article.slug}`, { article: omitSlug(article) }),
+  favorite: slug => requests.post(`/articles/${slug}/favorite`),
+  unfavorite: slug => requests.del(`/articles/${slug}/favorite`)
 };
 
 const Auth = {
