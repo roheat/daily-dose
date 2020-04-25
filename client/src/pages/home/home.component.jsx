@@ -5,6 +5,8 @@ import agent from "api/agent";
 import Banner from "components/banner/banner.component";
 import MainView from "components/main-view/main-view.component";
 import TagsView from "components/tags-view/tags-view.component";
+import ArticleListActionTypes from "redux/article-list/article-list.types";
+import CommonActionTypes from "redux/common/common.types";
 
 class HomePage extends React.Component {
   componentWillMount() {
@@ -49,9 +51,9 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   onLoad: (tab, payload) =>
-    dispatch({ type: "HOME_PAGE_LOADED", tab, payload }),
+    dispatch({ type: CommonActionTypes.HOME_PAGE_LOADED, tab, payload }),
   onClickTag: (tag, payload) =>
-    dispatch({ type: "APPLY_TAG_FILTER", tag, payload })
+    dispatch({ type: ArticleListActionTypes.APPLY_TAG_FILTER, tag, payload })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomePage);

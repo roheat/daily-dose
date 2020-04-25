@@ -7,6 +7,10 @@ import ArticleList from "components/article-list/article-list.component";
 import EditProfileSettings from "components/edit-profile-settings/edit-profile-settings.component";
 import FollowButton from "components/follow-button/follow-button.component";
 
+import ArticleListActionTypes from "redux/article-list/article-list.types";
+import CommonActionTypes from "redux/common/common.types";
+import ProfileActionTypes from "redux/profile/profile.types";
+
 class ProfilePage extends React.Component {
   componentDidMount() {
     this.props.onLoad(
@@ -122,15 +126,20 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   onFollow: username =>
-    dispatch({ type: "FOLLOW_USER", payload: agent.Profile.follow(username) }),
+    dispatch({
+      type: ProfileActionTypes.FOLLOW_USER,
+      payload: agent.Profile.follow(username)
+    }),
   onUnfollow: username =>
     dispatch({
-      type: "UNFOLLOW_USER",
+      type: ProfileActionTypes.UNFOLLOW_USER,
       payload: agent.Profile.unfollow(username)
     }),
-  onLoad: payload => dispatch({ type: "PROFILE_PAGE_LOADED", payload }),
-  onUnload: () => dispatch({ type: "PROFILE_PAGE_UNLOADED" }),
-  onSetPage: (page, payload) => dispatch({ type: "SET_PAGE", page, payload })
+  onLoad: payload =>
+    dispatch({ type: CommonActionTypes.PROFILE_PAGE_LOADED, payload }),
+  onUnload: () => dispatch({ type: CommonActionTypes.PROFILE_PAGE_UNLOADED }),
+  onSetPage: (page, payload) =>
+    dispatch({ type: ArticleListActionTypes.SET_PAGE, page, payload })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProfilePage);

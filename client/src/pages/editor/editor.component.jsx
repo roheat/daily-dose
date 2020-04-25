@@ -2,6 +2,8 @@ import React from "react";
 import ListErrors from "components/list-errors/list-errors.component";
 import agent from "api/agent";
 import { connect } from "react-redux";
+import CommonActionTypes from "redux/common/common.types";
+import EditorActionTypes from "redux/editor/editor.types";
 
 class EditorPage extends React.Component {
   constructor() {
@@ -43,7 +45,8 @@ class EditorPage extends React.Component {
   }
 
   handleChange = event => {
-    this.setState({ [event.target.name]: event.target.value });
+    // this.setState({ [event.target.name]: event.target.value });
+    this.props.onUpdateField([event.target.name], event.target.value);
   };
 
   watchEnter = event => {
@@ -53,13 +56,17 @@ class EditorPage extends React.Component {
     }
   };
 
+  handleAddTag = tag => {
+    this.props.onAddTag(tag);
+  };
+
   handleRemoveTag = tag => {
     this.props.onRemoveTag(tag);
   };
 
   submitForm = event => {
     event.preventDefault();
-    const { title, description, body, tagList } = this.state;
+    const { title, description, body, tagList } = this.props;
     const article = {
       title,
       description,
@@ -77,8 +84,7 @@ class EditorPage extends React.Component {
   };
 
   render() {
-    const { title, description, body, tagList } = this.state;
-
+    const { title, description, body, tagInput, tagList } = this.props;
     const { errors, loading } = this.props;
     return (
       <div className="editor-page">
@@ -124,25 +130,27 @@ class EditorPage extends React.Component {
 
                   <div className="form-group">
                     <input
-                      name="tags"
+                      name="tagInput"
                       className="form-control form-control-lg"
                       type="text"
                       placeholder="Enter tags"
-                      value={tagList}
+                      value={tagInput}
                       onChange={this.handleChange}
                       onKeyUp={this.watchEnter}
                     />
                   </div>
 
                   <div className="tag-list">
-                    {tagList.map(tag => (
-                      <span className="tag-default tag-pill" key="tag">
-                        <i
-                          className="ion-close-round"
-                          onClick={() => this.handleRemoveTag(tag)}
-                        />
-                      </span>
-                    ))}
+                    {tagList &&
+                      tagList.map(tag => (
+                        <span className="tag-default tag-pill" key={tag}>
+                          {tag}{" "}
+                          <i
+                            className="ion-close-round"
+                            onClick={() => this.handleRemoveTag(tag)}
+                          />
+                        </span>
+                      ))}
                   </div>
 
                   <button
@@ -168,11 +176,15 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  onAddTag: () => dispatch({ type: "ADD_TAG" }),
-  onLoad: payload => dispatch({ type: "EDITOR_PAGE_LOADED", payload }),
-  onRemoveTag: tag => dispatch({ type: "REMOVE_TAG", tag }),
-  onSubmit: payload => dispatch({ type: "ARTICLE_SUBMITTED", payload }),
-  onUnload: () => dispatch({ type: "EDITOR_PAGE_UNLOADED" })
+  onAddTag: () => dispatch({ type: EditorActionTypes.ADD_TAG }),
+  onLoad: payload =>
+    dispatch({ type: EditorActionTypes.EDITOR_PAGE_LOADED, payload }),
+  onRemoveTag: tag => dispatch({ type: EditorActionTypes.REMOVE_TAG, tag }),
+  onSubmit: payload =>
+    dispatch({ type: CommonActionTypes.ARTICLE_SUBMITTED, payload }),
+  onUnload: () => dispatch({ type: EditorActionTypes.EDITOR_PAGE_UNLOADED }),
+  onUpdateField: (key, value) =>
+    dispatch({ type: EditorActionTypes.UPDATE_FIELD_EDITOR, key, value })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditorPage);

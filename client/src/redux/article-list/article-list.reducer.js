@@ -1,6 +1,9 @@
+import ArticleListActionTypes from "./article-list.types";
+import CommonActionTypes from "../common/common.types";
+
 export default (state = {}, action) => {
   switch (action.type) {
-    case "HOME_PAGE_LOADED":
+    case CommonActionTypes.HOME_PAGE_LOADED:
       return {
         ...state,
         articles: action.payload && action.payload[1].articles,
@@ -9,7 +12,7 @@ export default (state = {}, action) => {
         currentPage: 0
       };
 
-    case "APPLY_TAG_FILTER":
+    case ArticleListActionTypes.APPLY_TAG_FILTER:
       return {
         ...state,
         articles: action.payload.articles,
@@ -18,8 +21,8 @@ export default (state = {}, action) => {
         tag: action.tag,
         currentPage: 0
       };
-    case "PROFILE_PAGE_LOADED":
-    case "PROFILE_FAVORITES_PAGE_LOADED":
+    case CommonActionTypes.PROFILE_PAGE_LOADED:
+    case CommonActionTypes.PROFILE_FAVORITES_PAGE_LOADED:
       return {
         ...state,
         articles: action.payload && action.payload[1].articles,
@@ -27,7 +30,7 @@ export default (state = {}, action) => {
         currentPage: 0
       };
 
-    case "SET_PAGE":
+    case ArticleListActionTypes.SET_PAGE:
       return {
         ...state,
         articles: action.payload.articles,
@@ -35,12 +38,12 @@ export default (state = {}, action) => {
         currentPage: action.page
       };
 
-    case "HOME_PAGE_UNLOADED":
-    case "PROFILE_PAGE_UNLOADED":
-    case "PROFILE_FAVORITES_PAGE_UNLOADED":
+    case CommonActionTypes.HOME_PAGE_UNLOADED:
+    case CommonActionTypes.PROFILE_PAGE_UNLOADED:
+    case CommonActionTypes.PROFILE_FAVORITES_PAGE_UNLOADED:
       return {};
 
-    case "CHANGE_TAB":
+    case ArticleListActionTypes.CHANGE_TAB:
       return {
         ...state,
         tab: action.tab,

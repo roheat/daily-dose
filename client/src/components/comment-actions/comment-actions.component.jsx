@@ -1,7 +1,8 @@
 import React from "react";
 import agent from "api/agent";
 import { connect } from "react-redux";
-import articleActionTypes from "redux/article/article.types";
+
+import { deleteComment } from "redux/article/article.actions";
 
 const CommentActions = props => {
   const del = () => {
@@ -21,8 +22,7 @@ const CommentActions = props => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  onDelete: (payload, commentId) =>
-    dispatch({ type: articleActionTypes.DELETE_COMMENT, payload, commentId })
+  onDelete: (payload, commentId) => dispatch(deleteComment(payload, commentId))
 });
 
 export default connect(null, mapDispatchToProps)(CommentActions);

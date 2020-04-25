@@ -2,7 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import agent from "api/agent";
 import { connect } from "react-redux";
-import articleActionTypes from "redux/article/article.types";
+
+import { deleteArticle } from "redux/article/article.actions";
 
 const ArticleActions = props => {
   const { article, canModify, onDelete } = props;
@@ -26,8 +27,7 @@ const ArticleActions = props => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  onDelete: payload =>
-    dispatch({ type: articleActionTypes.DELETE_ARTICLE, payload })
+  onDelete: payload => dispatch(deleteArticle(payload))
 });
 
 export default connect(null, mapDispatchToProps)(ArticleActions);

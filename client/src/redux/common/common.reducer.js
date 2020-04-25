@@ -1,7 +1,7 @@
-import commonActionTypes from "./common.types";
-import authActionTypes from "../auth/auth.types";
-import settingsActionTypes from "../settings/settings.types";
-import articleActionTypes from "../article/article.types";
+import CommonActionTypes from "./common.types";
+import AuthActionTypes from "../auth/auth.types";
+import SettingsActionTypes from "../settings/settings.types";
+import ArticleActionTypes from "../article/article.types";
 
 const INITIAL_STATE = {
   appName: "DailyDose",
@@ -10,7 +10,7 @@ const INITIAL_STATE = {
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case commonActionTypes.APP_LOAD:
+    case CommonActionTypes.APP_LOAD:
       return {
         ...state,
         token: action.token || null,
@@ -18,19 +18,19 @@ export default (state = INITIAL_STATE, action) => {
         currentUser: action.payload ? action.payload.user : null
       };
 
-    case commonActionTypes.REDIRECT:
+    case CommonActionTypes.REDIRECT:
       return { ...state, redirectTo: null };
 
-    case articleActionTypes.DELETE_ARTICLE:
+    case ArticleActionTypes.DELETE_ARTICLE:
       return {
         ...state,
         redirectTo: "/"
       };
 
-    case authActionTypes.LOGOUT:
+    case AuthActionTypes.LOGOUT:
       return { ...state, redirectTo: "/", token: null, currentUser: null };
-    case authActionTypes.LOGIN:
-    case authActionTypes.REGISTER:
+    case AuthActionTypes.LOGIN:
+    case AuthActionTypes.REGISTER:
       return {
         ...state,
         redirectTo: action.error ? null : "/",
@@ -38,14 +38,14 @@ export default (state = INITIAL_STATE, action) => {
         currentUser: action.error ? null : action.payload.user
       };
 
-    case settingsActionTypes.SETTINGS_SAVED:
+    case SettingsActionTypes.SETTINGS_SAVED:
       return {
         ...state,
         redirectTo: action.error ? null : "/",
         currentUser: action.error ? null : action.payload.user
       };
 
-    case "ARTICLE_SUBMITTED":
+    case CommonActionTypes.ARTICLE_SUBMITTED:
       const redirectTo = `article/${action.payload.article.slug}`;
       return {
         ...state,

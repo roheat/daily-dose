@@ -1,15 +1,16 @@
-import actionTypes from "./settings.types";
+import SettingsActionTypes from "./settings.types";
+import CommonActionTypes from "../common/common.types";
 
 export default (state = {}, action) => {
   switch (action.type) {
-    case actionTypes.SETTINGS_SAVED:
+    case SettingsActionTypes.SETTINGS_SAVED:
       return {
         ...state,
         loading: false,
         errors: action.error ? action.payload.errors : null
       };
 
-    case "ASYNC_START":
+    case CommonActionTypes.ASYNC_START:
       return {
         ...state,
         loading: true

@@ -7,6 +7,8 @@ import { withRouter } from "react-router-dom";
 import ArticleMeta from "components/article-meta/article-meta.component";
 import CommentContainer from "components/comment-container/comment-container.component";
 
+import { loadArticle } from "redux/article/article.actions";
+
 class ArticlePage extends React.Component {
   componentWillMount() {
     const {
@@ -77,7 +79,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  onLoad: payload => dispatch({ type: "ARTICLE_PAGE_LOADED", payload })
+  onLoad: payload => dispatch(loadArticle(payload))
 });
 
 export default withRouter(

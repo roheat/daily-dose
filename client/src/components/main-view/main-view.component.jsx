@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 
 import agent from "api/agent";
 import ArticleList from "components/article-list/article-list.component";
+import ArticleListActionTypes from "redux/article-list/article-list.types";
 
 const YourFeedTab = props => {
   const handleClick = event => {
@@ -98,10 +99,11 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  onTabClick: (tab, payload) => dispatch({ type: "CHANGE_TAB", tab, payload }),
+  onTabClick: (tab, payload) =>
+    dispatch({ type: ArticleListActionTypes.CHANGE_TAB, tab, payload }),
   onSetPage: (tab, page) =>
     dispatch({
-      type: "SET_PAGE",
+      type: ArticleListActionTypes.SET_PAGE,
       page,
       payload:
         tab === "feed" ? agent.Articles.feed(page) : agent.Articles.all(page)

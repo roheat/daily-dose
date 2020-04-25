@@ -1,16 +1,17 @@
-import actionTypes from "./auth.types";
+import AuthActionTypes from "./auth.types";
+import CommonActionTypes from "../common/common.types";
 
 export default (state = {}, action) => {
   switch (action.type) {
-    case actionTypes.LOGIN:
+    case AuthActionTypes.LOGIN:
       return {
         ...state,
         loading: false,
         errors: action.error ? action.payload.errors : null
       };
 
-    case "ASYNC_START":
-      if (action.subtype === "LOGIN") {
+    case CommonActionTypes.ASYNC_START:
+      if (action.subtype === AuthActionTypes.LOGIN) {
         return { ...state, loading: true };
       }
       return state;
