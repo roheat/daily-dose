@@ -4,7 +4,8 @@ import superagentPromise from "superagent-promise";
 const superagent = superagentPromise(_superagent, global.Promise);
 
 // const API_ROOT = "https://conduit.productionready.io/api";
-const API_ROOT = "http://localhost:7777/api";
+// const API_ROOT = "http://localhost:7777/api";
+const API_ROOT = `/api`;
 
 const responseBody = res => res.body;
 
