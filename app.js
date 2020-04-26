@@ -38,6 +38,11 @@ if (!isProduction) {
 
 if (isProduction) {
   mongoose.connect(process.env.MONGODB_URI);
+  app.use(express.static("client/build"));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "client", "build", "index.html"));
+  });
 } else {
   mongoose.connect(process.env.DATABASE);
   mongoose.set("debug", true);
