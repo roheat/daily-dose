@@ -21,15 +21,15 @@ class ProfilePage extends React.Component {
     );
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.profile.following !== this.props.profile.following)
-      nextProps.onLoad(
-        Promise.all([
-          agent.Profile.get(nextProps.match.params.username),
-          agent.Articles.byAuthor(nextProps.match.params.username)
-        ])
-      );
-  }
+  // componentWillReceiveProps(nextProps) {
+  //   if (nextProps.profile.following !== this.props.profile.following)
+  //     nextProps.onLoad(
+  //       Promise.all([
+  //         agent.Profile.get(nextProps.match.params.username),
+  //         agent.Articles.byAuthor(nextProps.match.params.username)
+  //       ])
+  //     );
+  // }
 
   componentWillUnmount() {
     this.props.onUnload();
