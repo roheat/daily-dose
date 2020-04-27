@@ -46,7 +46,7 @@ export default (state = INITIAL_STATE, action) => {
       };
 
     case CommonActionTypes.ARTICLE_SUBMITTED:
-      const redirectTo = `article/${action.payload.article.slug}`;
+      const redirectTo = `/article/${action.payload.article.slug}`;
       return {
         ...state,
         redirectTo

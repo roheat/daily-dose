@@ -6,17 +6,6 @@ import CommonActionTypes from "redux/common/common.types";
 import EditorActionTypes from "redux/editor/editor.types";
 
 class EditorPage extends React.Component {
-  constructor() {
-    super();
-
-    this.state = {
-      title: "",
-      description: "",
-      body: "",
-      tagList: []
-    };
-  }
-
   componentWillReceiveProps(nextProps) {
     if (this.props.match.params.slug !== nextProps.match.params.slug) {
       if (nextProps.match.params.slug) {
@@ -159,7 +148,7 @@ class EditorPage extends React.Component {
                     disabled={loading}
                     onClick={this.submitForm}
                   >
-                    Publish Article
+                    Save Changes
                   </button>
                 </div>
               </form>
