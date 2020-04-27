@@ -80,7 +80,7 @@ class ProfilePage extends React.Component {
     return (
       <div className="profile-page">
         <div className="user-info">
-          <div style={{ minHeight: "11em" }}>
+          <div style={{ minHeight: "13em" }}>
             <div className="col-xs-12 col-md-10 offset-md-1">
               <img src={profile.image} className="user-img" alt="profile" />
               <h4>{profile.username}</h4>
